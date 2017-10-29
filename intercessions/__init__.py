@@ -1,7 +1,9 @@
 import re
 import sys
+import time
 import win32
 import atexit
+import msvcrt
 import colorama
 from contextlib import contextmanager
 from terminalsize import get_terminal_size
@@ -9,6 +11,7 @@ from terminalsize import get_terminal_size
 
 _enabled_vt_processing = False
 _atexit_registered = False
+
 
 class Styler(unicode):
     def __new__(cls, style):
@@ -19,32 +22,29 @@ class Styler(unicode):
     def __call__(self, text):
         return self + text + colorama.Style.RESET_ALL
 
+
 class MoveY():
     def __init__(self, term):
         self.term = term
 
     def __call__(self, y):
-        out = ''
-        up = str(self.term.move_up)
-        for i in range(1, self.term.height):
-            out += up
+        pos = self.term.get_location()
+        return '\x1b[%s;%sH' % (y, pos[0])
 
-        down = str(self.term.move_down)
-        for i in range(1, int(y)):
-            out += down
-
-        return out
 
 class MoveX():
     def __init__(self, term):
         self.term = term
 
     def __call__(self, x):
-        return '\x1b[%sG' % (x)
+        pos = self.term.get_location()
+        return '\x1b[%s;%sH' % (pos[1], x)
+
 
 class Move():
     def __call__(self, x, y):
-        return '\x1b[%s;%sH' % (x, y)
+        return '\x1b[%s;%sH' % (y, x)
+
 
 class Terminal():
     def __init__(self, kind=None, stream=None, force_styling=False):
@@ -53,7 +53,11 @@ class Terminal():
         if stream is None:
             stream = sys.__stdout__
 
-        if stream != sys.__stdout__:
+        instream = stream
+        if stream == sys.__stdout__:
+            instream = sys.__stdin__
+
+        else:
             stream = colorama.AnsiToWin32(stream).stream
 
         try:
@@ -64,6 +68,7 @@ class Terminal():
 
         # @todo check stream_descriptor
         self.stream = stream
+        self.instream = instream
         self._styles = {
             # Control
             'reset': '\x1b[0m',
@@ -160,7 +165,7 @@ class Terminal():
 
     @property
     def move_x(self):
-        return MoveX()
+        return MoveX(self)
 
     @property
     def move(self):
@@ -215,8 +220,44 @@ class Terminal():
         finally:
             self.write(self.normal_cursor)
 
+    def get_location(self):
+        self.write('\x1b[6n')
+        self.stream.flush()
+
+        data = self.read(10, 1)
+        match = re.search(r'\[(\d+);(\d+)R', data)
+
+        if match:
+            row, col = match.groups()
+            return int(row), int(col)
+
+        # Couldn't get location
+        return -1, -1
+
     def write(self, text):
         self.stream.write(text)
+
+    def read(self, length=None, timeout=5):
+        start_time = time.time()
+        input = ''
+        while True:
+            if msvcrt.kbhit():
+                chr = msvcrt.getwch()
+                if ord(chr) == 13:  # enter_key
+                    break
+
+                elif ord(chr) >= 32:  # space_char
+                    input += chr
+
+            if (
+                time.time() - start_time > timeout
+            ) or (
+                length is not None and len(input) >= length
+            ):
+                break
+
+        return input
+
 
 def enable_vt_processing():
     global _enabled_vt_processing, _atexit_registered
@@ -231,7 +272,7 @@ def enable_vt_processing():
         win32.STDOUT,
         mode | win32.ENABLE_VIRTUAL_TERMINAL_PROCESSING
     ):
-            return False  # Unsupported
+        return False  # Unsupported
 
     _enabled_vt_processing = True
     if not _atexit_registered:
@@ -239,6 +280,7 @@ def enable_vt_processing():
         _atexit_registered = True
 
     return True
+
 
 def restore_vt_processing(atexit=False):
     global _enabled_vt_processing, _atexit_registered
@@ -251,9 +293,11 @@ def restore_vt_processing(atexit=False):
     if _enabled_vt_processing:
         win32.SetConsoleMode(
             win32.STDOUT,
-            win32.GetConsoleMode(win32.STDOUT) & ~win32.ENABLE_VIRTUAL_TERMINAL_PROCESSING
+            win32.GetConsoleMode(
+                win32.STDOUT) & ~win32.ENABLE_VIRTUAL_TERMINAL_PROCESSING
         )
         _enabled_vt_processing = False
+
 
 __all__ = [
     'Terminal'
