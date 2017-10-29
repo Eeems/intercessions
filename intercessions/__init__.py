@@ -234,6 +234,9 @@ class Terminal():
         # Couldn't get location
         return -1, -1
 
+    def title(self, title):
+        self.write('\x1b]0;%s\a' % (title))
+
     def write(self, text):
         self.stream.write(text)
 
