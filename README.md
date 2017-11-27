@@ -1,3 +1,4 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/eeems/intercessions/badge.svg)](https://snyk.io/test/github/eeems/intercessions)
 # Intercessions
 A blessings polyfill for the windows command line
 
