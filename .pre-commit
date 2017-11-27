@@ -1,2 +1,2 @@
-pipreqs "$(realpath .)" --force
+pipreqs --force .
 git add requirements.txt
