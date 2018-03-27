@@ -12,6 +12,12 @@ from .terminalsize import get_terminal_size
 _enabled_vt_processing = False
 _atexit_registered = False
 
+try:
+    unicode
+
+except NameError:
+    unicode = str
+
 
 class Styler(unicode):
     def __new__(cls, style):
