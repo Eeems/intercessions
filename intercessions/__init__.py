@@ -1,7 +1,7 @@
 import re
 import sys
 import time
-import .win32
+from . import win32
 import atexit
 import msvcrt
 import colorama
