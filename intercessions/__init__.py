@@ -1,16 +1,22 @@
 import re
 import sys
 import time
-import win32
+from . import win32
 import atexit
 import msvcrt
 import colorama
 from contextlib import contextmanager
-from terminalsize import get_terminal_size
+from .terminalsize import get_terminal_size
 
 
 _enabled_vt_processing = False
 _atexit_registered = False
+
+try:
+    unicode
+
+except NameError:
+    unicode = str
 
 
 class Styler(unicode):
