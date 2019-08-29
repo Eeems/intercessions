@@ -1,21 +1,10 @@
 from setuptools import setup, find_packages
-from codecs import open
 from os import path
-import pypandoc
 
 
 here = path.abspath(path.dirname(__file__))
-with open(path.join(here, 'README.rst'), 'w') as f:
-    try:
-        long_description = pypandoc.convert_file('README.md', 'rst')
-
-    except OSError as e:
-        if e.message != "No pandoc was found":
-            raise
-
-        pypandoc.download_pandoc()
-
-    f.write(long_description+'\n')
+with open(path.join(here, 'README.md'), 'r') as f:
+    long_description = f.read()
 
 setup(
     name='intercessions',
@@ -23,10 +12,11 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.1.5',
+    version='1.1.6',
 
     description='A blessings polyfill for the windows command line',
     long_description=long_description,
+    long_description_content_type="text/markdown; charset=UTF-8; variant=GFM",
 
     # The project's main homepage.
     url='https://github.com/Eeems/intercessions',
@@ -92,7 +82,7 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['pypandoc', 'pipreqs'],
+        'dev': ['pipreqs'],
         'optional': ['blessings']
     },
 

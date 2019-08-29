@@ -1,6 +1,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/eeems/intercessions/badge.svg)](https://snyk.io/test/github/eeems/intercessions)[![Requirements Status](https://requires.io/github/Eeems/intercessions/requirements.svg?branch=master)](https://requires.io/github/Eeems/intercessions/requirements/?branch=master)
 
 # Intercessions
+
 A blessings polyfill for the windows command line
 
 Attempts to implement the full [blessings](https://pypi.python.org/pypi/blessings/) API in a format that will work on windows. Makes use of [colorama](https://pypi.python.org/pypi/colorama) to help with styling.
