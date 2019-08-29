@@ -19,12 +19,4 @@ with t.location(0,0), t.hidden_cursor():
 
 ```
 
-# Known Issues
-1. Terminal.fullscreen will work, but will crash CMD/Powershell after exit. See [tartley/colorama#139](https://github.com/tartley/colorama/pull/139#issuecomment-340211264)
-2. The following will not work as they have no command codes entered
-   * standout
-   * no_standout
-   * subscript
-   * no_subscript
-   * superscript
-   * no_superscript
+If [blessings](https://pypi.python.org/pypi/blessings/) is installed and you are not running the windows version of python it will attempt to return the [blessings](https://pypi.python.org/pypi/blessings/) instance of Terminal instead of the intercessions one.

@@ -61,6 +61,8 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
 
         # Topics
         'Topic :: Software Development :: Libraries',
@@ -90,7 +92,8 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['pypandoc', 'pipreqs']
+        'dev': ['pypandoc', 'pipreqs'],
+        'optional': ['blessings']
     },
 
     # If there are data files included in your packages that need to be
