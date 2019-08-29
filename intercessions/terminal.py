@@ -147,16 +147,15 @@ class Terminal():
             'save': '\x1b[s',
             'restore': '\x1b[u',
             'enter_fullscreen': '\x1b[?1049h',
-            'exit_fullscreen': '\x1b[??1049l',
+            'exit_fullscreen': '\x1b[?1049l',
             'hide_cursor': '\x1b[?25l',
             'normal_cursor': '\x1b[?25h',
-            # Unsupported
-            'standout': '',  # Can't find code
-            'no_standout': '',  # Can't find code
-            'subscript': '',  # Can't find code
-            'no_subscript': '',  # Can't find code
-            'superscript': '',  # Can't find code
-            'no_superscript': '',  # Can't find code
+            'standout': '\x1b[7m',
+            'no_standout': '\x1b[m',
+            'subscript': '\x1b[74m',
+            'no_subscript': '\x1b[75m',
+            'superscript': '\x1b[73m',
+            'no_superscript': '\x1b[75m',
             # Colors
             'black': colorama.Fore.BLACK,
             'red': colorama.Fore.RED,
