@@ -3,9 +3,18 @@ from codecs import open
 from os import path
 import pypandoc
 
+
 here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), 'w') as f:
-    long_description = pypandoc.convert_file('README.md', 'rst')
+    try:
+        long_description = pypandoc.convert_file('README.md', 'rst')
+
+    except OSError as e:
+        if e.message != "No pandoc was found":
+            raise
+
+        pypandoc.download_pandoc()
+
     f.write(long_description+'\n')
 
 setup(
@@ -32,14 +41,13 @@ setup(
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         # How mature is this project? Common values are
-        # Development Status :: 1 - Planning
-        # Development Status :: 2 - Pre-Alpha
-        # Development Status :: 3 - Alpha
-        # Development Status :: 4 - Beta
-        # Development Status :: 5 - Production/Stable
-        # Development Status :: 6 - Mature
-        # Development Status :: 7 - Inactive
-        'Development Status :: 2 - Pre-Alpha',
+        # 'Development Status :: 1 - Planning',
+        # 'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
+        # 'Development Status :: 4 - Beta',
+        # 'Development Status :: 5 - Production/Stable',
+        # 'Development Status :: 6 - Mature',
+        # 'Development Status :: 7 - Inactive',
 
         # Indicate who your project is intended for
         'Environment :: Console',
