@@ -1,4 +1,4 @@
 blessings==1.7
 colorama==0.4.1
-setuptools==41.5.1
+setuptools==41.6.0
 pypandoc==1.4
