@@ -34,10 +34,10 @@ setup(
         # 'Development Status :: 1 - Planning',
         # 'Development Status :: 2 - Pre-Alpha',
         # 'Development Status :: 3 - Alpha',
-        'Development Status :: 4 - Beta',
+        # 'Development Status :: 4 - Beta',
         # 'Development Status :: 5 - Production/Stable',
         # 'Development Status :: 6 - Mature',
-        # 'Development Status :: 7 - Inactive',
+        'Development Status :: 7 - Inactive',
 
         # Indicate who your project is intended for
         'Environment :: Console',
@@ -84,7 +84,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'dev': ['pipreqs'],
-        'optional': ['blessed']
+        'optional': ['blessings']
     },
 
     # If there are data files included in your packages that need to be
