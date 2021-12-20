@@ -12,7 +12,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.1.7',
+    version='1.1.8',
 
     description='A blessings polyfill for the windows command line',
     long_description=long_description,
@@ -33,8 +33,8 @@ setup(
         # How mature is this project? Common values are
         # 'Development Status :: 1 - Planning',
         # 'Development Status :: 2 - Pre-Alpha',
-        'Development Status :: 3 - Alpha',
-        # 'Development Status :: 4 - Beta',
+        # 'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         # 'Development Status :: 5 - Production/Stable',
         # 'Development Status :: 6 - Mature',
         # 'Development Status :: 7 - Inactive',
@@ -52,6 +52,8 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
 
         # Topics
         'Topic :: Software Development :: Libraries',
