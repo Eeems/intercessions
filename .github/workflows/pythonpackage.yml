@@ -16,7 +16,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9, '3.10']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
@@ -32,6 +32,9 @@ jobs:
     - name: Build package
       run: |
         python setup.py sdist bdist_wheel
+    - name: Simple test
+      run: |
+        python -c 'from intercessions import Terminal'
     - name: Publish package
       if: github.event_name == 'release'
       env:
