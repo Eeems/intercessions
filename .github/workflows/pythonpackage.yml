@@ -32,6 +32,9 @@ jobs:
     - name: Build package
       run: |
         python setup.py sdist bdist_wheel
+    - name: Simple test
+      run: |
+        python -m intercessions
     - name: Publish package
       if: github.event_name == 'release'
       env:
