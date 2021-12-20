@@ -5,7 +5,7 @@ if system() == "windows":
 
 else:
     try:
-        from blessings import Terminal
+        from blessed import Terminal
 
     except ImportError:
         from .terminal import Terminal
